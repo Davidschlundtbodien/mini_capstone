@@ -1,0 +1,10 @@
+  json.id product.id
+  json.name product.name
+  json.price product.price
+  json.tax number_to_currency(product.tax)
+  json.total number_to_currency(product.total)
+  json.in_stock product.in_stock
+  json.discounted product.is_discounted?
+  json.description product.description
+  json.supplier product.supplier.name
+  json.images product.images

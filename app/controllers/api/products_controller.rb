@@ -1,21 +1,48 @@
 class Api::ProductsController < ApplicationController
-  def all_products_action
-    @products = Product.all
-    render 'all_products.json.jbuilder'
+  
+  def index
+    @products = Product.all.order(:id)
+    render 'index.json.jbuilder'
   end
 
-  def saison
-    @product = Product.find_by(name: "Saison")
-    render 'beer_info.json.jbuilder'
+  def show
+    @product = Product.find(params[:id])
+    render 'show.json.jbuilder'
   end
 
-  def bier_de_garde
-    @product = Product.find_by(name: "Bier de garde")
-    render 'beer_info.json.jbuilder'
+  def create
+    @product = Product.new(
+      name: params[:name],
+      price: params[:price],
+      description: params[:description],
+      )
+
+    if @product.save
+      render 'show.json.jbuilder'
+    else
+      render json: {errors: @product.errors.full_messages}, status: :not_acceptable
+    end  
   end
 
-  def gueuze
-    @product = Product.find_by(name: "Gueuze")
-    render 'beer_info.json.jbuilder'
+  def update
+    @product = Product.find(params[:id])
+
+    @product.name = params[:name] || @product.name
+    @product.price = params[:price] || @product.price
+    @product.description = params[:description] || @product.description
+    @product.in_stock = params[:in_stock] || @product.in_stock
+    
+    if @product.save
+      render 'show.json.jbuilder'
+    else
+      render json: {errors: @product.errors.full_messages}, status: :not_acceptable
+    end  
   end
+
+  def destroy
+    product = Product.find(params[:id])
+    product.destroy
+    render json: {message: "Product removed from database."}
+  end
+
 end
