@@ -1,13 +1,17 @@
 class Api::ProductsController < ApplicationController
   
+  before_action :authenticate_user
+
+
   def index
     @products = Product.all.order(:id)
-    render 'index.json.jbuilder'
+    render "index.json.jbuilder"
+
   end
 
   def show
     @product = Product.find(params[:id])
-    render 'show.json.jbuilder'
+    render "show.json.jbuilder"
   end
 
   def create

@@ -8,3 +8,4 @@
   json.description product.description
   json.supplier product.supplier.name
   json.images product.images
+  json.current_user current_user
