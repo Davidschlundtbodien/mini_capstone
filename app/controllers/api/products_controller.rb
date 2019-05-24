@@ -5,8 +5,13 @@ class Api::ProductsController < ApplicationController
 
   def index
     @products = Product.all.order(:id)
-    render "index.json.jbuilder"
+    
+    if params[:category]
+      category = Category.find_by(name: params[:category])
+      @products = category.products
+    end
 
+    render "index.json.jbuilder"
   end
 
   def show
