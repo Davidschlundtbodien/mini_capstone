@@ -6,7 +6,6 @@
   json.in_stock product.in_stock
   json.discounted product.is_discounted?
   json.description product.description
-  json.supplier product.supplier.name
   json.categories product.categories
   json.images product.images
   json.current_user current_user
